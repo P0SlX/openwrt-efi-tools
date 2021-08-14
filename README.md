@@ -4,7 +4,7 @@ Some scripts to manage OpenWrt EFI images on x86_64.
 
 * `gen-efi-image.sh`
 ```
-./gen-efi-image.sh SOURCE_IMG EFI_IMG DEST_IMG
+$ ./gen-efi-image.sh SOURCE_IMG EFI_IMG DEST_IMG
 ```
 Generates an EFI-compatible x86-64 disk image for OpenWrt
 by combining the rootfs and kernel from the latest stable release
@@ -39,17 +39,23 @@ $ ./gen-efi-image.sh \
 
 * `resize-image.sh`
 
-  `[SIZE]` is optional, defaults to 2G
+  `[size]` and `[disk path]` is optional, defaults to 2G
+  Resize to a specified size:
 ```
-./resize-image.sh openwrt-${OPENWRT_VER}-x86-64-combined-ext4-efi.img [SIZE]
+# ./resize-image.sh -i openwrt-${OPENWRT_VER}-x86-64-combined-ext4-efi.img -s 16G
 ```
+  or to resize to a disk size:
+```
+# ./resize-image.sh -i openwrt-${OPENWRT_VER}-x86-64-combined-ext4-efi.img -d /dev/sda
+```
+Change the output file path with -o.
 
 Generate a resized image with a larger root partition. Online resize from
 within OpenWrt is not possible with such a small disk and results in errors.
 
 * `qemu.sh`
 ```
-./qemu.sh IMAGE
+$ ./qemu.sh IMAGE
 ```
 Runs the image in QEMU in EFI mode.
 
