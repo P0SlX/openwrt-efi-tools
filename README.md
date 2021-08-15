@@ -12,7 +12,7 @@ with the EFI image available in snapshot since [@a6b7c3e](https://github.com/ope
 
 Requires `qemu-utils` package.
 
-Tested with versions 19.07 through 19.07.5.
+Tested with versions 19.07 through 21.02.0-rc4 (r16256-2d5ee43dc6).
 
 ## Instructions
 
