@@ -47,10 +47,10 @@ main() {
 	echo "Growing filesystem..."
 	offset=$(sfdisk -d ${DEST_IMG} | grep "${DEST_IMG}2" | sed -E 's/.*start=\s+([0-9]+).*/\1/g')
 	size=$(sfdisk -d ${DEST_IMG} | grep "${DEST_IMG}2" | sed -E 's/.*size=\s+([0-9]+).*/\1/g')
-	loopdev=$(sudo losetup --offset $((512 * $offset)) --sizelimit $((512 * $size)) --find --show ${DEST_IMG})
-	sudo e2fsck -yf $loopdev >/dev/null 2>&1 || true
-	sudo resize2fs $loopdev > /dev/null 2>&1
-	sudo losetup -d $loopdev
+	loopdev=$(losetup --offset $((512 * $offset)) --sizelimit $((512 * $size)) --find --show ${DEST_IMG})
+	e2fsck -yf $loopdev >/dev/null 2>&1 || true
+	resize2fs $loopdev > /dev/null 2>&1
+	losetup -d $loopdev
 
 	echo "Done! Image path : ${DEST_IMG}"
 }
@@ -113,7 +113,7 @@ if [[ -n "$DISK_PATH" && -n "$SIZE" ]]; then
 fi
 
 if [[ -n "$DISK_PATH" ]]; then
-	SIZE=$(sudo qemu-img measure ${DISK_PATH} | grep "required" | awk '{ print $3 }')
+	SIZE=$(qemu-img measure ${DISK_PATH} | grep "required" | awk '{ print $3 }')
 fi
 
 if [[ -z "$SIZE" ]]; then
