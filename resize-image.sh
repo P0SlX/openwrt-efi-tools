@@ -103,6 +103,10 @@ if [[ -z "$SRC_IMG" ]]; then
 	usage; exit 1;
 fi
 
+if [[ ! -f "$SRC_IMG" ]]; then
+	echo "Unable to find source image"; exit 1;
+fi
+
 # Disk path and size cannot be set at the same time
 if [[ -n "$DISK_PATH" && -n "$SIZE" ]]; then
 	usage; exit 1;
