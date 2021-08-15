@@ -38,10 +38,10 @@ main() {
 
 	echo "Resizing root partition to ${SIZE}..."
 	qemu-img resize -f raw ${DEST_IMG} ${SIZE}
-	sfdisk -d ${DEST_IMG} > ${DEST_IMG%.img}.sfdisk > /dev/null 2>&1
+	sfdisk -q -d ${DEST_IMG} > ${DEST_IMG%.img}.sfdisk
 	sed -i -E "/${DEST_IMG}2/ s/size=[ 0-9,]+//" ${DEST_IMG%.img}.sfdisk
 	sed -i "/^last-lba/d" ${DEST_IMG%.img}.sfdisk
-	sfdisk ${DEST_IMG} < ${DEST_IMG%.img}.sfdisk > /dev/null 2>&1
+	sfdisk -q ${DEST_IMG} < ${DEST_IMG%.img}.sfdisk
 	rm -rf ${DEST_IMG%.img}.sfdisk
 
 	echo "Growing filesystem..."
